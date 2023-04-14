@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://stwq7ismmip1"]
+
+[ext_resource type="Script" path="res://tx_player.gd" id="1_80v1a"]
+[ext_resource type="Texture2D" uid="uid://djvnodky73di" path="res://Texture/TX Player.png" id="1_ehlhp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t8dgx"]
+size = Vector2(21, 21)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wb5p8"]
+radius = 1.0
+height = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uqu27"]
+radius = 20.025
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_80v1a")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+texture_filter = 1
+position = Vector2(3, -19)
+texture = ExtResource("1_ehlhp")
+hframes = 4
+vframes = 2
+frame = 3
+
+[node name="Player" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-4.76837e-07, -17)
+texture = ExtResource("1_ehlhp")
+hframes = 4
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_t8dgx")
+debug_color = Color(0, 1, 0, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="FadeArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FadeArea"]
+position = Vector2(0, 6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wb5p8")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_uqu27")
+disabled = true
