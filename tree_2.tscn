@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://bot2oi3op1yft"]
+
+[ext_resource type="Script" path="res://tree.gd" id="1_g77wx"]
+[ext_resource type="Texture2D" uid="uid://cgobvqql3rh6r" path="res://Texture/TX Shadow Plant.png" id="2_1ig1n"]
+[ext_resource type="Texture2D" uid="uid://bfxpk5116ch2m" path="res://Texture/TX Plant.png" id="3_j4m61"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0qann"]
+radius = 5.0
+height = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5kes6"]
+radius = 40.5299
+
+[sub_resource type="Animation" id="Animation_ji7tt"]
+resource_name = "FadeOut"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TxPlant:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.247059)]
+}
+
+[sub_resource type="Animation" id="Animation_1rfhe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TxPlant:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g3kyg"]
+_data = {
+"FadeOut": SubResource("Animation_ji7tt"),
+"RESET": SubResource("Animation_1rfhe")
+}
+
+[node name="Tree2" type="StaticBody2D"]
+scale = Vector2(1.01264, 0.997013)
+collision_mask = 0
+script = ExtResource("1_g77wx")
+
+[node name="TxShadowPlant" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(8, -2)
+texture = ExtResource("2_1ig1n")
+region_enabled = true
+region_rect = Rect2(173, 105, 82, 46)
+
+[node name="TxPlant" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, -59)
+scale = Vector2(0.995698, 1)
+texture = ExtResource("3_j4m61")
+region_enabled = true
+region_rect = Rect2(161, 17, 95, 136)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_0qann")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -56)
+shape = SubResource("CircleShape2D_5kes6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g3kyg")
+}
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered" flags=18]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited" flags=18]
