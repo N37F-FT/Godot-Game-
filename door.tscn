@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwgrc58425qpf"]
+
+[ext_resource type="Script" path="res://door.gd" id="1_vsxk6"]
+[ext_resource type="Texture2D" uid="uid://b0ah0l2ei2jjl" path="res://Texture/TX Props.png" id="2_rysvd"]
+[ext_resource type="Texture2D" uid="uid://b4t8ekt8pb40s" path="res://Texture/TX Shadow.png" id="3_jg2kk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xnccr"]
+size = Vector2(37, 7.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1t4p"]
+size = Vector2(37, 29.25)
+
+[node name="door" type="StaticBody2D"]
+script = ExtResource("1_vsxk6")
+
+[node name="TxProps2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -23)
+texture = ExtResource("2_rysvd")
+region_enabled = true
+region_rect = Rect2(29, 166, 37, 53)
+
+[node name="TxShadow2" type="Sprite2D" parent="TxProps2"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(4, 14)
+texture = ExtResource("3_jg2kk")
+region_enabled = true
+region_rect = Rect2(29, 194, 45, 25)
+
+[node name="TxProps" type="Sprite2D" parent="."]
+position = Vector2(0, -21)
+texture = ExtResource("2_rysvd")
+offset = Vector2(0, -0.5)
+region_enabled = true
+region_rect = Rect2(29, 103, 37, 50)
+
+[node name="TxShadow" type="Sprite2D" parent="TxProps"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(5, 11)
+texture = ExtResource("3_jg2kk")
+offset = Vector2(0, -0.5)
+region_enabled = true
+region_rect = Rect2(29, 125, 47, 28)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.25)
+shape = SubResource("RectangleShape2D_xnccr")
+debug_color = Color(0, 0.992157, 0, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -11.5)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 11.5)
+shape = SubResource("RectangleShape2D_k1t4p")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
